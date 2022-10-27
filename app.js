@@ -7,11 +7,15 @@ app.listen(port, () =>{
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-app.get("/info", (req, res) => {
+app.get("/api/products", (req, res) => {
     res.json(products);
   });
 
-
+  app.get("/api/info", (req, res) => {
+    res.send(`<p>Our store has info for ${products.length} products</p>
+          <h3>${new Date()}</h3>`
+    );
+  });
 
 
   const products = [
