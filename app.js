@@ -17,6 +17,10 @@ app.get("/api/products", (req, res) => {
     );
   });
 
+  app.get("/api/about", (req, res)=>{
+    res.json(personal)
+  })
+
 
   const products = [
     {
@@ -64,3 +68,42 @@ app.get("/api/products", (req, res) => {
       ]
     }
   ]
+
+  const personal = {
+    name: "juan M. lorza",
+    age: 28,
+    email: "lorza112@gmail.com",
+    phone: "564681534",
+    address: "01800054558",
+    city: "cali",
+    links: [
+        {
+            name: "GitHub",
+            url: "https://github.com/explore",
+        },
+        {
+            name: "twitter",
+            url: "https://twitter/juan.lorza",
+        },
+        
+    ],
+    website: "https://juanMlorza.dev",
+    skills: [
+        {
+            name: "JavaScript",
+            level: "learning",
+        },
+        {
+            name: "react",
+            level: "learning",
+        },
+        {
+            name: "html",
+            level: "learning",
+        },
+        {
+            name: "Node",
+            level: "learning",
+        },
+    ]
+  }
