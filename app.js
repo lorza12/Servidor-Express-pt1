@@ -3,23 +3,67 @@ const express = require('express')
 const app = express()
 const port = 8080;
 
-app.listen(port, () =>{
-    console.log(`Example app listening at http://localhost:${port}`);
+const URL = '/api/products';
+app.use(express.json());
+app.use(morgan('dev'));
+
+
+const Morgan = morgan((tokens, req, res) => {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+})
+
+console.log(Morgan);
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });
 
 app.get("/api/products", (req, res) => {
-    res.json(products);
-  });
+  res.json({ products });
+});
 
-  app.get("/api/info", (req, res) => {
-    res.send(`<p>Our store has info for ${products.length} products</p>
-          <h3>${new Date()}</h3>`
-    );
-  });
+app.get("/api/products/:id", (req, res) => {
+  const products_id = products.find(
+    (item) => item.id === parseInt(req.params.id)
+  );
 
-  app.get("/api/about", (req, res)=>{
-    res.json(personal)
-  })
+  if (!products_id) {
+    return res.status(404).send("El producto no se encuentra");
+  }
+
+  res.json(products_id);
+});
+
+
+app.delete("/api/products/:id", (req, res) => {
+  const products_id = products.find(
+    (item) => item.id === parseInt(req.params.id)
+  );
+
+  if (!products_id) {
+    return res.status(404).send("El producto no se encuentra");
+  }
+
+  const index = products.indexOf(products_id);
+  products.splice(index, 1);
+  res.json(products_id);
+});
+
+
+
+app.get("/info", (req, res) => {
+  res.send(
+    `<p>Our store has info for ${products.length} products</p>
+        <h3>Hola: ${new Date()}</h3>`
+  );
+});
+
 
 
   const products = [
