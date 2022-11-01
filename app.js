@@ -64,6 +64,32 @@ app.get("/info", (req, res) => {
   );
 });
 
+//metodo post 
+app.post("/api/products/", (req, res) => {
+  let newProduct = req.body;
+  let Product = false;
+  for (let i = 0; i < products.length; index++) {
+    if (products[i].title === newProduct.title) {
+      Product = true;
+    }
+  }
+ if (Product=== true) {
+    res.status(404).send("The title is already exist");
+  } 
+​
+  if(newProduct.title === undefined ||newProduct.title === null||newProduct.title === "" || newProduct.price === undefined ||
+  newProduct.price === null || newProduct.price === ""){
+    return res.status(400).send("There is a missing file, you must to write title and price");
+  }
+ newProduct.id = Math.floor(Math.random() * 100);
+   products.push(newProduct)
+   res.json(newProduct);
+  return res.status(200).send("succesfull");
+  
+    
+    
+})
+
 
 
   const products = [
